@@ -1,17 +1,12 @@
-var app = require("express")();
-var http = require("http").Server(app);
+'use strict';
 
-app.get("/healthcheck", function(req, res) {
-    setTimeout(
-        () => {
-            res.json({
-                status: 'ok'
-            });
-        },
-        10000
-    );
+const app = require("express")()
+    , delay = require('./delay');
+
+app.get("/healthcheck", delay(10), function(req, res) {
+    res.json({ status: 'ok' });
 });
 
-http.listen(3000, function() {
+app.listen(3000, function() {
     console.log("listening on *:3000");
 });
